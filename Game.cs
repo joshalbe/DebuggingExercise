@@ -18,87 +18,86 @@ namespace HelloWorld
 
             while(_gameOver == false)
             {
-
-            }
-
-        }
-        //This function handles the battles for our ladder. roomNum is used to update the our opponent to be the enemy in the current room. 
-        //turnCount is used to keep track of how many turns it took the player to beat the enemy
-        bool StartBattle(int roomNum, ref int turnCount)
-        {
-            //initialize default enemy stats
-            int enemyHealth = 0;
-            int enemyAttack = 0;
-            int enemyDefense = 0;
-            string enemyName = "";
-            //Changes the enemy's default stats based on our current room number. 
-            //This is how we make it seem as if the player is fighting different enemies
-            switch (roomNum)
-            {
-                case 0:
-                    {
-                        enemyHealth = 100;
-                        enemyAttack = 20;
-                        enemyDefense = 5;
-                        enemyName = "Wizard";
-                    }
-                case 1:
-                    {
-                        enemyHealth = 80;
-                        enemyAttack = 30;
-                        enemyDefense = 5;
-                        enemyName = "Troll";
-                    }
-                case 2
-                    {
-                        
-                        enemyHealth = 200;
-                        enemyAttack = 40;
-                        enemyDefense = 10;
-                        enemyName = "Giant";
-                    }
-            }
-
-            //Loops until the player or the enemy is dead
-            while(_playerHealth >= 0 || enemyHealth >= 0)
-            {
-                //Displays the stats for both charactersa to the screen before the player takes their turn
-                PrintStats(_playerName, _playerHealth, _playerDamage, _playerDefense);
-                PrintStats(enemyName, enemyHealth, enemyAttack, enemyDefense);
-
-                //Get input from the player
-                char input;
-                GetInput(input, "Attack", "Defend");
-                //If input is 1, the player wants to attack. By default the enemy blocks any incoming attack
-                if(input == '1')
+                //This function handles the battles for our ladder. roomNum is used to update the our opponent to be the enemy in the current room. 
+                //turnCount is used to keep track of how many turns it took the player to beat the enemy
+                bool StartBattle(int roomNum, ref int turnCount)
                 {
-                    BlockAttack(enemyHealth, _playerDamage, enemyDefense);
-                    Console.WriteLine("You dealt " + _playerDamage + " damage.");
-                    Console.Write("> ");
-                    Console.ReadKey();
+                    //initialize default enemy stats
+                    int enemyHealth = 0;
+                    int enemyAttack = 0;
+                    int enemyDefense = 0;
+                    string enemyName = "";
+                    //Changes the enemy's default stats based on our current room number. 
+                    //This is how we make it seem as if the player is fighting different enemies
+                    switch (roomNum)
+                    {
+                        case 0:
+                            {
+                                enemyHealth = 100;
+                                enemyAttack = 20;
+                                enemyDefense = 5;
+                                enemyName = "Wizard";
+                            }
+                        case 1:
+                            {
+                                enemyHealth = 80;
+                                enemyAttack = 30;
+                                enemyDefense = 5;
+                                enemyName = "Troll";
+                            }
+                        case 2:
+                            {
+
+                                enemyHealth = 200;
+                                enemyAttack = 40;
+                                enemyDefense = 10;
+                                enemyName = "Giant";
+                            }
+                    }
+
+                    //Loops until the player or the enemy is dead
+                    while (_playerHealth >= 0 || enemyHealth >= 0)
+                    {
+                        //Displays the stats for both charactersa to the screen before the player takes their turn
+                        PrintStats(_playerName, _playerHealth, _playerDamage, _playerDefense);
+                        PrintStats(enemyName, enemyHealth, enemyAttack, enemyDefense);
+
+                        //Get input from the player
+                        char input;
+                        GetInput(input, "Attack", "Defend");
+                        //If input is 1, the player wants to attack. By default the enemy blocks any incoming attack
+                        if (input == '1')
+                        {
+                            BlockAttack(enemyHealth, _playerDamage, enemyDefense);
+                            Console.WriteLine("You dealt " + _playerDamage + " damage.");
+                            Console.Write("> ");
+                            Console.ReadKey();
+                        }
+                        //If the player decides to defend the enemy just takes their turn. However this time the block attack function is
+                        //called instead of simply decrementing the health by the enemy's attack value.
+                        else
+                        {
+                            BlockAttack(_playerHealth, enemyAttack, _playerDefense);
+                            Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
+                            Console.Write("> ");
+                            Console.ReadKey();
+                            turnCount++;
+                            Console.Clear();
+                        }
+                        Console.Clear();
+                        //After the player attacks, the enemy takes its turn. Since the player decided not to defend, the block attack function is not called.
+                        _playerHealth -= enemyAttack;
+                        Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
+                        Console.Write("> ");
+                        Console.ReadKey();
+                        turnCount++;
+
+                    }
+                    //Return whether or not our player died
+                    return _playerHealth != 0;
+
                 }
-                //If the player decides to defend the enemy just takes their turn. However this time the block attack function is
-                //called instead of simply decrementing the health by the enemy's attack value.
-                else
-                {
-                    BlockAttack(_playerHealth, enemyAttack, _playerDefense);
-                    Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
-                    Console.Write("> ");
-                    Console.ReadKey();
-                    turnCount++;
-                    Console.Clear();
-                }
-                Console.Clear();
-                //After the player attacks, the enemy takes its turn. Since the player decided not to defend, the block attack function is not called.
-                _playerHealth -= enemyAttack;
-                Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
-                Console.Write("> ");
-                Console.ReadKey();
-                turnCount++;
-                
             }
-            //Return whether or not our player died
-            return _playerHealth != 0;
 
         }
         //Decrements the health of a character. The attack value is subtracted by that character's defense
@@ -162,7 +161,7 @@ namespace HelloWorld
                     {
                         Console.WriteLine("A troll stands before you");
                     }
-                case 2
+                case 2:
                     {
                         Console.WriteLine("A giant has appeared!");
                     }
