@@ -126,7 +126,7 @@ namespace HelloWorld
         //Gets input from the player
         //Out's the char variable given. This variables stores the player's input choice.
         //The parameters option1 and option 2 displays the players current chpices to the screen
-        void GetInput(out char input,string option1, string option2)
+        void GetInput(out char input, string option1, string option2)
         {
             //Initialize input
             input = ' ';
@@ -187,7 +187,7 @@ namespace HelloWorld
         {
             char input = ' ';
             //Loops until a valid option is choosen
-            while(input != '1' && input != '2' && input != '3')
+            while(input != '1' || input != '2' || input != '3')
             {
                 //Prints options
                 Console.WriteLine("Welcome! Please select a character.");
@@ -213,7 +213,7 @@ namespace HelloWorld
                             _playerDefense = 2;
                             _playerDamage = 70;
                         }
-                    case '3'
+                    case '3':
                         {
                             _playerName = "Joedazz";
                             _playerHealth = 200;
