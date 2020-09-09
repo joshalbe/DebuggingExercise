@@ -119,8 +119,13 @@ namespace HelloWorld
         //Scales up the player's stats based on the amount of turns it took in the last battle
         void LevelUp(int turnCount)
         {
+            int scale = levelScaleMax - turnCount;
+            if (scale <= 0)
+            {
+                scale = 1;
+            }
             char statInput = ' ';
-            while(statInput != '1' && statInput != '2' && statInput != '3')
+            while (statInput != '1' && statInput != '2' && statInput != '3')
             {
                 Console.Clear();
                 Console.WriteLine("Choose which stat to increase.");
@@ -133,7 +138,7 @@ namespace HelloWorld
                 {
                     case '1':
                         {
-                            _playerHealth += 20;
+                            _playerHealth += 20 * scale;
                             _playerDefense += 5;
                             _playerDamage += 5;
                             break;
@@ -141,15 +146,15 @@ namespace HelloWorld
                     case '2':
                         {
                             _playerHealth += 10;
-                            _playerDefense += 10;
-                            _playerDamage += 5;
+                            _playerDefense += 5;
+                            _playerDamage *= scale;
                             break;
                         }
                     case '3':
                         {
                             _playerHealth += 10;
-                            _playerDefense += 5;
-                            _playerDamage += 10;
+                            _playerDefense *= scale;
+                            _playerDamage += 5;
                             break;
                         }
                     //If an invalid input is selected display and input message and input over again.
@@ -163,17 +168,21 @@ namespace HelloWorld
                 }
                 Console.Clear();
             }
-
-            //Subtract the amount of turns from our maximum level scale to get our current level scale
-            //int scale = levelScaleMax - turnCount;
-            //if(scale <= 0)
-            //{
-            //    scale = 1;
-            //}
-            //_playerHealth += 10 * scale;
-            //_playerDamage *= scale;
-            //_playerDefense *= scale;
         }
+
+        //void LevelUp(int turnCount)
+        //{
+        //    //Subtract the amount of turns from our maximum level scale to get our current level scale
+        //    int scale = levelScaleMax - turnCount;
+        //    if (scale <= 0)
+        //    {
+        //        scale = 1;
+        //    }
+        //    _playerHealth += 10 * scale;
+        //    _playerDamage *= scale;
+        //    _playerDefense *= scale;
+        //}
+
         //Gets input from the player
         //Out's the char variable given. This variables stores the player's input choice.
         //The parameters option1 and option 2 displays the players current chpices to the screen
@@ -282,14 +291,14 @@ namespace HelloWorld
                         {
                             _playerName = "Gnojoel";
                             _playerHealth = 40;
-                            _playerDefense = 2;
+                            _playerDefense = 60;
                             _playerDamage = 70;
                             break;
                         }
                     case '3':
                         {
                             _playerName = "Joedazz";
-                            _playerHealth = 200;
+                            _playerHealth = 140;
                             _playerDefense = 5;
                             _playerDamage = 25;
                             break;
